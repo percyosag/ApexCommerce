@@ -1,10 +1,11 @@
-import { Link, useParams } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
 import Rating from "../components/Rating";
 import products from "../data/products";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 const ProductScreen = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const product = products.find((p) => p._id === id);
   if (!product) {
     return (
@@ -73,6 +74,7 @@ const ProductScreen = () => {
                   className="btn-block w-100"
                   type="button"
                   disabled={product.countInStock === 0}
+                  onClick={() => navigate(`/cart/${product._id}`)}
                 >
                   Add To Cart
                 </Button>
