@@ -1,24 +1,16 @@
-// import { Container, Row, Col } from "react-bootstrap";
+// import { Routes, Route } from "react-router-dom";
 // import Header from "./components/Header";
 // import Footer from "./components/Footer";
-// import Product from "./components/Product";
-// import products from "./data/products";
+// import HomeScreen from "./screens/HomeScreen";
 
 // function App() {
 //   return (
 //     <>
 //       <Header />
 //       <main className="py-3">
-//         <Container>
-//           <h1>Latest Products</h1>
-//           <Row>
-//             {products.map((product) => (
-//               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-//                 <Product product={product} />
-//               </Col>
-//             ))}
-//           </Row>
-//         </Container>
+//         <Routes>
+//           <Route path="/" element={<HomeScreen />} />
+//         </Routes>
 //       </main>
 //       <Footer />
 //     </>
@@ -31,6 +23,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
+import ProductScreen from "./screens/ProductScreen";
 
 function App() {
   return (
@@ -39,6 +32,7 @@ function App() {
       <main className="py-3">
         <Routes>
           <Route path="/" element={<HomeScreen />} />
+          <Route path="/product/:id" element={<ProductScreen />} />
         </Routes>
       </main>
       <Footer />
