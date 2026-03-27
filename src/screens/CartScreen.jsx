@@ -1,9 +1,13 @@
-import { useParams, Link } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import products from "../data/products";
+import { useParams, Link, useLocation } from "react-router-dom";
 
 const CartScreen = () => {
   const { id: productId } = useParams();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const qty = Number(searchParams.get("qty")) || 1;
 
   const product = products.find((p) => p._id === productId);
 
@@ -29,7 +33,7 @@ const CartScreen = () => {
 
               <Col md={2}>${product.price}</Col>
 
-              <Col md={2}>Qty: 1</Col>
+              <Col md={2}>Qty: {qty}</Col>
 
               <Col md={2}>
                 <Button type="button" variant="light">
@@ -45,8 +49,10 @@ const CartScreen = () => {
         <Card className="mt-4 p-3">
           <Row>
             <Col>
-              <h4>Subtotal (1) item</h4>
-              <strong>${product.price}</strong>
+              <h4>
+                Subtotal ({qty}) {qty === 1 ? "item" : "items"}
+              </h4>
+              <strong>${(product.price * qty).toFixed(2)}</strong>
             </Col>
           </Row>
         </Card>

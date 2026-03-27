@@ -1,11 +1,21 @@
-import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  Button,
+  Form,
+} from "react-bootstrap";
 import Rating from "../components/Rating";
 import products from "../data/products";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ProductScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [qty, setQty] = useState(1);
   const product = products.find((p) => p._id === id);
   if (!product) {
     return (
@@ -70,11 +80,30 @@ const ProductScreen = () => {
               </ListGroup.Item>
 
               <ListGroup.Item>
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Select
+                          value={qty}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
                 <Button
                   className="btn-block w-100"
                   type="button"
                   disabled={product.countInStock === 0}
-                  onClick={() => navigate(`/cart/${product._id}`)}
+                  onClick={() => navigate(`/cart/${product._id}?qty=${qty}`)}
                 >
                   Add To Cart
                 </Button>
